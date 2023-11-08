@@ -23,7 +23,7 @@ process RunStrelka {
     singularity run -B ${bind_paths} ${params.simg} /tools/strelka2/bin/configureStrelkaSomaticWorkflow.py \
     --normalBam ${normal_cram} \
     --tumorBam ${tumor_cram} \
-    --referenceFasta hg38.fa \
+    --referenceFasta \
     --exome \
     --runDir ${params.runDir}
 
