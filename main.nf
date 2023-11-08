@@ -1,11 +1,11 @@
-#!/usr/bin/env nextflow
+GRCh38_masked_v2_decoy_exclude.fa#!/usr/bin/env nextflow
 
 
 params.normal_cram        = "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg38.V3.BWA.MD.cram"
 params.tumor_cram         = "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg38.V3.BWA.MD.cram"
 params.runDir             = "${launchDir.baseName} /NF_Strelkatest_singularity"
 params.simg               = "/data/shared/programmer/simg/strelka2_2.9.10.sif"
-params.referenceFasta     = "/data/shared/genomes/hg38/GRCh38.primary.fa"
+params.referenceFasta     = "/data/shared/genomes/hg38/GRCh38_masked_v2_decoy_exclude.fa"
 
 
 process RunStrelka {
