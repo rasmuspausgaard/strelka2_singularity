@@ -6,13 +6,14 @@ params.runDir = "NF_Strelkatest_singularity"
 params.simg = "/data/shared/programmer/simg/strelka2_2.9.10.sif"
 params.referenceFasta = "/data/shared/genomes/hg38/GRCh38.primary.fa"
 
+
 process RunStrelka {
     bind_paths = "/data/shared/programmer/simg/"
 
     input:
     path normal_cram from params.normal_cram
     path tumor_cram from params.tumor_cram
-    path referenceFasta from params.referenceFasta
+    path genome_fasta from params.referenceFasta
 
     output:
     path "${params.runDir}/*"
