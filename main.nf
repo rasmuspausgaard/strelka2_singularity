@@ -4,6 +4,7 @@ params.normal_cram = "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6
 params.tumor_cram = "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg38.V3.BWA.MD.cram"
 params.runDir = "NF_Strelkatest_singularity"
 params.simg = "/data/shared/programmer/simg/strelka2_2.9.10.sif"
+params.referenceFasta = "/data/shared/genomes/hg38/GRCh38.primary.fa"
 
 process RunStrelka {
     bind_paths = "/data/shared/programmer/simg/"
@@ -11,7 +12,7 @@ process RunStrelka {
     input:
     path normal_cram from params.normal_cram
     path tumor_cram from params.tumor_cram
-
+    path referenceFasta from params.referenceFasta
 
     output:
     path "${params.runDir}/*"
