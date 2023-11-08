@@ -11,7 +11,7 @@ process RunStrelka {
     input:
     path normal_cram from params.normal_cram
     path tumor_cram from params.tumor_cram
-    path genome_fasta from params.genome_fasta
+
 
     output:
     path "${params.runDir}/*"
