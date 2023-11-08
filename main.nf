@@ -3,6 +3,7 @@ user="$USER"
 date=new Date().format( 'yyMMdd' )
 
 
+
 params.normal_cram        = "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg38.V3.BWA.MD.cram"
 params.tumor_cram         = "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg38.V3.BWA.MD.cram"
 params.runDir             = "${launchDir.baseName} /NF_Strelkatest_singularity"
