@@ -1,30 +1,19 @@
 #!/usr/bin/env nextflow
 
-params.normal_cram = "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg38.V3.BWA.MD.cram"
-params.tumor_cram = "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg38.V3.BWA.MD.cram"
-params.runDir = "${launchDir}/NF_Strelkatest_singularity" // Adjusted the space and baseName usage
-params.simg = "/data/shared/programmer/simg/strelka2_2.9.10.sif"
-params.referenceFasta = "/data/shared/genomes/hg38/GRCh38_masked_v2_decoy_exclude.fa"
-params.bind_paths = "/data/shared/programmer/simg/" 
+params.normal_cram = "/path/to/default/normal.cram"
+params.tumor_cram = "/path/to/default/tumor.cram"
+params.runDir = "${launchDir}/NF_Strelkatest_singularity"
+params.simg = "/path/to/strelka2.sif"
+params.referenceFasta = "/path/to/default/reference.fa"
+params.genome_fasta = params.referenceFasta // Assign referenceFasta to genome_fasta if that's the intended use
 
 process RunStrelka {
+    // Other directives...
+    
     input:
     path normal_cram from params.normal_cram
     path tumor_cram from params.tumor_cram
-    path referenceFasta from params.referenceFasta
+    path genome_fasta from params.genome_fasta // Now genome_fasta should be correctly defined
 
-    output:
-    path "${params.runDir}/*"
-
-    script:
-    """
-    singularity run -B ${params.bind_paths} ${params.simg} /tools/strelka2/bin/configureStrelkaSomaticWorkflow.py \
-    --normalBam ${normal_cram} \
-    --tumorBam ${tumor_cram} \
-    --referenceFasta ${referenceFasta} \
-    --exome \
-    --runDir ${params.runDir}
-
-    singularity run -B ${params.bind_paths} ${params.simg} python2 ${params.runDir}/runWorkflow.py -j 10 -m local
-    """
+    // Output and script directives...
 }
