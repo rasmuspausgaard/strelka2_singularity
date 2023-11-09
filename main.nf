@@ -5,7 +5,7 @@ params.normalBam= "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg
 params.tumorBam = "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg38.V3.BWA.MD.cram"
 params.runDir = "${launchDir}/NF_Strelkatest_singularity" 
 params.referenceFasta = "/data/shared/genomes/hg38/GRCh38_masked_v2_decoy_exclude.fa"
-params.genome_fasta = hg38
+
 
 
 process RunStrelka {
@@ -13,6 +13,7 @@ process RunStrelka {
     path normalBam from params.normalBam
     path tumorBam from params.tumorBam
     path referenceFasta from params.referenceFasta
+    path genome_fasta from params.referenceFasta
 
     output:
     path "${params.runDir}/*"
