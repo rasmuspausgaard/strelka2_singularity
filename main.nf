@@ -5,6 +5,7 @@ params.normalBam= "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg
 params.tumorBam = "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg38.V3.BWA.MD.cram"
 params.runDir = "${launchDir}/NF_Strelkatest_singularity" 
 params.referenceFasta = "/data/shared/genomes/hg38/GRCh38_masked_v2_decoy_exclude.fa"
+params.genome_fasta = hg19.fa
 
 
 process RunStrelka {
