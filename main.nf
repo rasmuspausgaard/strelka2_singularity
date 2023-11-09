@@ -9,8 +9,8 @@ params.referenceFasta = "/data/shared/genomes/hg38/GRCh38_masked_v2_decoy_exclud
 
 process RunStrelka {
     input:
-    path normal_cram from params.normal_cram
-    path tumor_cram from params.tumor_cram
+    path normal_cram from params.normalBam
+    path tumor_cram from params.tumorBam
     path genome_Fasta from params.referenceFasta
 
     output:
