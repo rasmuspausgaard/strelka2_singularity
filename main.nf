@@ -19,13 +19,13 @@ process RunStrelka {
 
     script:
     """
-    singularity run -B s_bind /data/shared/programmer/simg/strelka2_2.9.10.sif /data/shared/programmer/simg/tools/strelka2/bin/configureStrelkaSomaticWorkflow.py \
+    singularity run -B /data/shared/programmer/simg/strelka2_2.9.10.sif /data/shared/programmer/simg/tools/strelka2/bin/configureStrelkaSomaticWorkflow.py \
     --normalBam          \
     --tumorBam           \
     --referenceFasta     \
     --exome              \
     --runDir 
 
-    singularity run -B ${params.bind_paths} ${params.simg} python2 ${params.runDir}/runWorkflow.py -j 10 -m local
+    singularity run -B /data/shared/programmer/simg/strelka2_2.9.10.sif python2 ${params.runDir}/runWorkflow.py -j 10 -m local
     """
 }
