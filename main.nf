@@ -1,25 +1,33 @@
 #!/usr/bin/env nextflow
 
-////////////////////////////////////////////////////// USE //////////////////////////////////////////////////////
-/* singularity run  data/shared/programmer/simg/strelka2_2.9.10.sif 
+date=new Date().format( 'yyMMdd' )
+user="$USER"
+runID="${date}.${user}"
+params.help = null
+params.fastq = null
+
+
+///////////////////////////////USE///////////////////////////////
+// singularity run  data/shared/programmer/simg/strelka2_2.9.10.sif 
 // cd .. indtil man er i en mappe hvor man kan køre ls og se tools
 // tools/strelka2/bin/configureStrelkaSomaticWorkflow.py --normalBam ../"cramfilen med sti" --tumorBam ../"cramfilen med sti" 
-/*
+// "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg38.V3.BWA.MD.cram"
 
 params.normalCram           =null 
 params.normalCrai           =null
 params.tumorCram            =null 
 params.tumorCrai            =null
 
+params.genome               ="hg38"
 params.hg38v1               =null  // primary hg38 full, original hg38 assembly, no decoys, etc.
 params.hg38v2               =null  // UCSC NGS set
 params.hg38v3               =null  // DEFAULT: NGC version, masked regions. 
-params.genome               ="hg38"
+
 params.outdir               ="${launchDir.baseName}.NF_Strelkatest_singularity"
 params.runDir               ="${launchDir.baseName}"
 
-
 params.server               ="lnx01"
+
 
 switch (params.server) {
     case 'lnx01':
@@ -48,8 +56,6 @@ switch (params.server) {
     break;
 }
 
-
-params.genome                ="hg38"
 
 switch (params.genome) {
     case 'hg19':
@@ -204,7 +210,8 @@ switch (params.genome) {
 
 
 
-//////////////////////////////////////////////// Input CRAM and CRAI Files Channels /////////////////////////////////////////////////
+
+///////////////// Input CRAM and CRAI Files Channels //////////////////////
 
 // Create a channel for normal CRAM files and split the file name to get the base name.
 Channel
@@ -230,53 +237,48 @@ Channel
 .map { tuple(it.baseName.tokenize('.').get(0),it) }
 .into {tumorCrai1; tumorCrai2; tumorCrai3}
 
+
+
 // Join CRAI files into CRAM files
 // Join normal CRAM and CRAI files based on their base names.
 normalCram1 
-.join(normalCrai1)
-.into {normal_cram_crai1; normal_cram_crai2; normal_cram_crai3}
+    .join(normalCrai1)
+    .into {normal_cram_crai1; normal_cram_crai2; normal_cram_crai3}
 
 // Join tumor CRAM and CRAI files based on their base names.
 tumorCram1 
-.join(tumorCrai1)
-.into {tumor_cram_crai1; tumor_cram_crai2; tumor_cram_crai3}
-
-
-// Input specification for the Strelka workflow
-// Define inputs for the Strelka workflow: metadata, normal CRAM and index, and tumor CRAM and index.
-input:
-tuple val(meta), path(normal_cram), path(normal_index) from normal_cram_crai1
-tuple val(meta), path(tumor_cram), path(tumor_index) from tumor_cram_crai1
-
-// Output specification for the Strelka workflow
+    .join(tumorCrai1)
+    .into {tumor_cram_crai1; tumor_cram_crai2; tumor_cram_crai3}
 
 
 
 
-/////////////////////////////////////////////// Script execution for Strelka workflow /////////////////////////////////////////////
-
-
-
-
+// Script execution for Strelka workflow
 // Define the Strelka workflow process with inputs and output. The script includes configuration and execution of the Strelka somatic variant caller.
-script:
-RunStrelka {
+
+process strelka2_singularity {
+
     input:
-    path normalBam from params.normalCram
-    path tumorBam from params.tumorCram
-    path referenceFasta from params.referenceFasta
-    path genome_fasta from params.genome_fasta
+    // Input specification for the Strelka workflow
+    // Define inputs for the Strelka workflow: metadata, normal CRAM and index, and tumor CRAM and index.
+    tuple val(meta), path(normal_cram), path(normal_index) from normal_cram_crai1
+    tuple val(meta), path(tumor_cram), path(tumor_index) from tumor_cram_crai1
+
+    // path normalBam from params.normalCram
+    // path tumorBam from params.tumorCram
+    // path referenceFasta from params.referenceFasta
+    // path genome_fasta from params.genome_fasta
 
     output:
-    path "${params.runDir}/*"
+    
 
     script:
     """
-    singularity run -B /data/shared/programmer/simg/strelka2_2.9.10.sif /tools/strelka2/bin/configureStrelkaSomaticWorkflow.py \
-    --normalBam ${normal_cram}
-    --tumorBam ${tumor_cram}
-    --referenceFasta ${genome_fasta}
-    --exome
+    singularity run -B ${s_bind} ${simgpath}/strelka2_2.9.10.sif /tools/strelka2/bin/configureStrelkaSomaticWorkflow.py \
+    --normalBam ${normal_cram} \
+    --tumorBam ${tumor_cram} \
+    --referenceFasta ${genome_fasta} \
+    --exome \
     --runDir NF_Strelkatest_singularity
 
     singularity run -B /data/shared/programmer/simg/strelka2_2.9.10.sif python2 ${params.runDir}/runWorkflow.py -j 10 -m local
@@ -286,4 +288,3 @@ RunStrelka {
     -m local
     """
 }
-
