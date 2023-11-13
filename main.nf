@@ -13,16 +13,19 @@ params.fastq = null
 // tools/strelka2/bin/configureStrelkaSomaticWorkflow.py --normalBam ../"cramfilen med sti" --tumorBam ../"cramfilen med sti" 
 // "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg38.V3.BWA.MD.cram"
 
+
+// unset parameters
 params.normalCram           =null 
 params.normalCrai           =null
 params.tumorCram            =null 
 params.tumorCrai            =null
 
-params.genome               ="hg38"
+// preset parameters
 params.hg38v1               =null  // primary hg38 full, original hg38 assembly, no decoys, etc.
 params.hg38v2               =null  // UCSC NGS set
 params.hg38v3               =null  // DEFAULT: NGC version, masked regions. 
 
+params.genome               ="hg38"
 params.outdir               ="${launchDir.baseName}.NF_Strelkatest_singularity"
 params.runDir               ="${launchDir.baseName}"
 
@@ -61,52 +64,52 @@ switch (params.genome) {
     case 'hg19':
         assembly="hg19"
         // Genome assembly files:
-        genome_fasta = "/data/shared/genomes/hg19/human_g1k_v37.fasta"
-        genome_fasta_fai = "/data/shared/genomes/hg19/human_g1k_v37.fasta.fai"
-        genome_fasta_dict = "/data/shared/genomes/hg19/human_g1k_v37.dict"
+        genome_fasta = "${syspath}/genomes/hg19/human_g1k_v37.fasta"
+        genome_fasta_fai = "${syspath}/genomes/hg19/human_g1k_v37.fasta.fai"
+        genome_fasta_dict = "${syspath}/genomes/hg19/human_g1k_v37.dict"
         genome_version="V1"
-        sve_genome = "/data/shared/genomes/hg19/SVE/SVE.human_g1k_v37.fa"
+        sve_genome = "${syspath}/genomes/hg19/SVE/SVE.human_g1k_v37.fa"
         // Gene and transcript annotation files:
 
-        gencode_gtf = "/data/shared/genomes/GRCh37/gene.annotations/gencode.v19.annotation.gtf"
+        gencode_gtf = "${syspath}/genomes/GRCh37/gene.annotations/gencode.v19.annotation.gtf"
         
          //Program  files:
-        msisensor_list="/data/shared/genomes/hg19/human_g1k_v37.microsatellites.list"
+        msisensor_list="${syspath}/genomes/hg19/human_g1k_v37.microsatellites.list"
 
-        cnvradar_anno="/data/shared/genomes/hg19/databases/vcfs/All_20180423.vcf.gz"
+        cnvradar_anno="${syspath}/genomes/hg19/databases/vcfs/All_20180423.vcf.gz"
         
-        cnvradar_anno_idx="/data/shared/genomes/hg19/databases/vcfs/All_20180423.vcf.gz.tbi"
+        cnvradar_anno_idx="${syspath}/genomes/hg19/databases/vcfs/All_20180423.vcf.gz.tbi"
         
-        cnvradar_ROI="/data/shared/genomes/hg19/interval.files/200108.NCBIrefseq.codingexons.nocontig.20bp.sorted.bed"
+        cnvradar_ROI="${syspath}/genomes/hg19/interval.files/200108.NCBIrefseq.codingexons.nocontig.20bp.sorted.bed"
         
-        cnvradar_roisum_dir="/data/shared/genomes/hg19/databases/cnvradar_roi_summaries/"
-        expansionhunter_db="/data/shared/programmer/ExpansionHunter-v4.0.2-linux_x86_64/variant_catalog/grch37/variant_catalog.json"
+        cnvradar_roisum_dir="${syspath}/genomes/hg19/databases/cnvradar_roi_summaries/"
+        expansionhunter_db="${syspath}/programmer/ExpansionHunter-v4.0.2-linux_x86_64/variant_catalog/grch37/variant_catalog.json"
         // Somatic calling files GATK Mutect2 pipeline
-        gatk_wgs_pon="/data/shared/genomes/hg19/databases/vcfs/somatic-b37_Mutect2-WGS-panel-b37.vcf"
-        mutect_gnomad="/data/shared/genomes/hg19/databases/vcfs/somatic-b37_af-only-gnomad.raw.sites.vcf"
-        gatk_contamination_ref="/data/shared/genomes/hg19/databases/vcfs/somatic-b37_small_exac_common_3.vcf"
+        gatk_wgs_pon="${syspath}/genomes/hg19/databases/vcfs/somatic-b37_Mutect2-WGS-panel-b37.vcf"
+        mutect_gnomad="${syspath}/genomes/hg19/databases/vcfs/somatic-b37_af-only-gnomad.raw.sites.vcf"
+        gatk_contamination_ref="${syspath}/genomes/hg19/databases/vcfs/somatic-b37_small_exac_common_3.vcf"
        
         // Program indexes
         pcgr_assembly="grch37"
-        sequenza_cg50_wig="/data/shared/genomes/hg19/human_g1k_v37.cg50base.wig.gz"
+        sequenza_cg50_wig="${syspath}/genomes/hg19/human_g1k_v37.cg50base.wig.gz"
 
         // Regions / variants:
-        dbsnp= "/data/shared/genomes/hg19/databases/vcfs/dbsnp147_All_20160601.vcf"
-        qualimap_ROI="/data/shared/genomes/hg19/interval.files/200108.NCBIrefseq.codingexons.nocontig.20bp.merged.sorted.6col.bed"
+        dbsnp= "${syspath}/genomes/hg19/databases/vcfs/dbsnp147_All_20160601.vcf"
+        qualimap_ROI="${syspath}/genomes/hg19/interval.files/200108.NCBIrefseq.codingexons.nocontig.20bp.merged.sorted.6col.bed"
         
-        ROI="/data/shared/genomes/hg19/interval.files/WES/IDT.exomes.EV7/EV7.ROI.bed"
+        ROI="${syspath}d/genomes/hg19/interval.files/WES/IDT.exomes.EV7/EV7.ROI.bed"
 
-        excluderegions="/data/shared/genomes/hg19/interval.files/WGS/gaplist.b37.cleaned.bed"
+        excluderegions="${syspath}/genomes/hg19/interval.files/WGS/gaplist.b37.cleaned.bed"
 
-        KGindels="/data/shared/genomes/hg19/databases/vcfs/1000G_phase1.indels.b37.vcf"
-        KGindels_idx="/data/shared/genomes/hg19/databases/vcfs/1000G_phase1.indels.b37.vcf.idx"
-        KGmills="/data/shared/genomes/hg19/databases/vcfs/Mills_and_1000G_gold_standard.indels.b37.vcf"
-        KGmills_idx="/data/shared/genomes/hg19/databases/vcfs/Mills_and_1000G_gold_standard.indels.b37.vcf.idx"
+        KGindels="${syspath}/genomes/hg19/databases/vcfs/1000G_phase1.indels.b37.vcf"
+        KGindels_idx="${syspath}/genomes/hg19/databases/vcfs/1000G_phase1.indels.b37.vcf.idx"
+        KGmills="${syspath}/genomes/hg19/databases/vcfs/Mills_and_1000G_gold_standard.indels.b37.vcf"
+        KGmills_idx="${syspath}/genomes/hg19/databases/vcfs/Mills_and_1000G_gold_standard.indels.b37.vcf.idx"
 
-        KG_p1_High_snps="/data/shared/genomes/hg19/databases/vcfs/1000G_phase1.snps.high_confidence.b37.vcf"
+        KG_p1_High_snps="${syspath}/genomes/hg19/databases/vcfs/1000G_phase1.snps.high_confidence.b37.vcf"
 
-        hapmap="/data/shared/genomes/hg19/databases/vcfs/hapmap_3.3.b37.vcf"
-        omni="/data/shared/genomes/hg19/databases/vcfs/1000G_omni2.5.b37.vcf"
+        hapmap="${syspath}/genomes/hg19/databases/vcfs/hapmap_3.3.b37.vcf"
+        omni="${syspath}/genomes/hg19/databases/vcfs/1000G_omni2.5.b37.vcf"
 
         break;
 
