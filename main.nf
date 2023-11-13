@@ -24,6 +24,9 @@ params.tumorCrai            =null
 params.hg38v1               =null  // primary hg38 full, original hg38 assembly, no decoys, etc.
 params.hg38v2               =null  // UCSC NGS set
 params.hg38v3               =null  // DEFAULT: NGC version, masked regions. 
+params.cnvpytorHis1=200
+params.cnvpytorHis2=1000
+params.cnvpytorHis3=10000
 
 params.genome               ="hg38"
 params.outdir               ="${launchDir.baseName}.NF_Strelkatest_singularity"
