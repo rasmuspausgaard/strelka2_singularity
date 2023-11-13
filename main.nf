@@ -8,10 +8,10 @@ params.fastq = null
 
 
 // unset parameters
-params.normal_cram           = null 
-params.normal_crai           = null
-params.tumor_cram            = null 
-params.tumor_crai            = null
+params.normal_Cram           = null 
+params.normal_Crai           = null
+params.tumor_Cram            = null 
+params.tumor_Crai            = null
 
 // preset parameters
 params.hg38v1               = null  // primary hg38 full, original hg38 assembly, no decoys, etc.
@@ -214,25 +214,25 @@ switch (params.genome) {
 
 // Create a channel for normal CRAM files and split the file name to get the base name.
 Channel
-.fromPath(params.normal_cram)
+.fromPath(params.normal_Cram)
 .map { tuple(it.baseName.tokenize('.').get(0),it) }
 .into {normalCram1; normalCram2; normalCram3}
 
 // Create a channel for normal CRAI files and split the file name to get the base name.
 Channel
-.fromPath(params.normal_crai)
+.fromPath(params.normal_Crai)
 .map { tuple(it.baseName.tokenize('.').get(0),it) }
 .into {normalCrai1; normalCrai2; normalCrai3}
 
 // Create a channel for tumor CRAM files and split the file name to get the base name.
 Channel
-.fromPath(params.tumor_cram)
+.fromPath(params.tumor_Cram)
 .map { tuple(it.baseName.tokenize('.').get(0),it) }
 .into {tumorCram1; tumorCram2; tumorCram3}
 
 // Create a channel for tumor CRAI files and split the file name to get the base name.
 Channel
-.fromPath(params.tumor_crai)
+.fromPath(params.tumor_Crai)
 .map { tuple(it.baseName.tokenize('.').get(0),it) }
 .into {tumorCrai1; tumorCrai2; tumorCrai3}
 
@@ -258,8 +258,8 @@ process strelka2_singularity {
     input:
     // Input specification for the Strelka workflow
     // Define inputs for the Strelka workflow: metadata, normal CRAM and index, and tumor CRAM and index.
-    tuple val(meta), path(normal_cram), path(normal_index) from normal_cram_crai1
-    tuple val(meta), path(tumor_cram), path(tumor_index) from tumor_cram_crai1
+    tuple val(meta), path(normal_Cram1), path(normal_index) from normal_cram_crai1
+    tuple val(meta), path(tumor_Cram1), path(tumor_index) from tumor_cram_crai1
 
     // path normalBam from params.normalCram
     // path tumorBam from params.tumorCram
@@ -272,8 +272,8 @@ process strelka2_singularity {
     script:
     """
     singularity run -B ${s_bind} ${simgpath}/strelka2_2.9.10.sif /tools/strelka2/bin/configureStrelkaSomaticWorkflow.py \
-    --normalBam ${normal_cram} \
-    --tumorBam ${tumor_cram} \
+    --normalBam ${normal_Cram} \
+    --tumorBam ${tumor_Cram} \
     --referenceFasta ${genome_fasta} \
     --exome \
     --runDir NF_Strelkatest_singularity
