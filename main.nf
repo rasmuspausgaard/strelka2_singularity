@@ -7,10 +7,10 @@ params.help = null
 params.fastq = null
 
 // unset parameters
-params.normalCram           =null 
-params.normalCrai           =null
-params.tumorCram            =null 
-params.tumorCrai            =null
+params.normal_cram           =null 
+params.normal_crai           =null
+params.tumor_cram            =null 
+params.tumor_crai            =null
 
 // preset parameters
 params.hg38v1               =null  // primary hg38 full, original hg38 assembly, no decoys, etc.
@@ -239,13 +239,11 @@ Channel
 
 // Join CRAI files into CRAM files
 // Join normal CRAM and CRAI files based on their base names.
-normalCram1 
-    .join(normalCrai1)
+normalCram1.join(normalCrai1)
     .into {normal_cram_crai1; normal_cram_crai2; normal_cram_crai3}
 
 // Join tumor CRAM and CRAI files based on their base names.
-tumorCram1 
-    .join(tumorCrai1)
+tumorCram1.join(tumorCrai1)
     .into {tumor_cram_crai1; tumor_cram_crai2; tumor_cram_crai3}
 
 
