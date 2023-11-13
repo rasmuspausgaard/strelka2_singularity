@@ -6,14 +6,6 @@ runID="${date}.${user}"
 params.help = null
 params.fastq = null
 
-
-///////////////////////////////USE///////////////////////////////
-// singularity run  data/shared/programmer/simg/strelka2_2.9.10.sif 
-// cd .. indtil man er i en mappe hvor man kan køre ls og se tools
-// tools/strelka2/bin/configureStrelkaSomaticWorkflow.py --normalBam ../"cramfilen med sti" --tumorBam ../"cramfilen med sti" 
-// "/lnx01_data2/shared/testdata/AV1_CRAM/107578340086_AV1_CV6.hg38.V3.BWA.MD.cram"
-
-
 // unset parameters
 params.normalCram           =null 
 params.normalCrai           =null
