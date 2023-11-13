@@ -6,6 +6,7 @@ runID="${date}.${user}"
 params.help = null
 params.fastq = null
 
+
 // unset parameters
 params.normal_cram           = null 
 params.normal_crai           = null
