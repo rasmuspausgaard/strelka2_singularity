@@ -219,19 +219,19 @@ Channel
 
 // Create a channel for normal CRAI files and split the file name to get the base name.
 Channel
-.fromPath(params.normal_Crai)
+.fromPath(params.normal_crai)
 .map { tuple(it.baseName.tokenize('.').get(0),it) }
 .into {normalCrai1; normalCrai2; normalCrai3}
 
 // Create a channel for tumor CRAM files and split the file name to get the base name.
 Channel
-.fromPath(params.tumor_Cram)
+.fromPath(params.tumor_cram)
 .map { tuple(it.baseName.tokenize('.').get(0),it) }
 .into {tumorCram1; tumorCram2; tumorCram3}
 
 // Create a channel for tumor CRAI files and split the file name to get the base name.
 Channel
-.fromPath(params.tumor_Crai)
+.fromPath(params.tumor_crai)
 .map { tuple(it.baseName.tokenize('.').get(0),it) }
 .into {tumorCrai1; tumorCrai2; tumorCrai3}
 
