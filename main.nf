@@ -7,24 +7,24 @@ params.help = null
 params.fastq = null
 
 // unset parameters
-params.normal_cram           =null 
-params.normal_crai           =null
-params.tumor_cram            =null 
-params.tumor_crai            =null
+params.normal_cram           = null 
+params.normal_crai           = null
+params.tumor_cram            = null 
+params.tumor_crai            = null
 
 // preset parameters
-params.hg38v1               =null  // primary hg38 full, original hg38 assembly, no decoys, etc.
-params.hg38v2               =null  // UCSC NGS set
-params.hg38v3               =null  // DEFAULT: NGC version, masked regions. 
+params.hg38v1               = null  // primary hg38 full, original hg38 assembly, no decoys, etc.
+params.hg38v2               = null  // UCSC NGS set
+params.hg38v3               = null  // DEFAULT: NGC version, masked regions. 
 params.cnvpytorHis1=200
 params.cnvpytorHis2=1000
 params.cnvpytorHis3=10000
 
-params.genome               ="hg38"
-params.outdir               ="${launchDir.baseName}.NF_Strelkatest_singularity"
-params.runDir               ="${launchDir.baseName}"
+params.genome               = "hg38"
+params.outdir               = "${launchDir.baseName}.NF_Strelkatest_singularity"
+params.runDir               = "${launchDir.baseName}"
 
-params.server               ="lnx01"
+params.server               = "lnx01"
 
 
 switch (params.server) {
