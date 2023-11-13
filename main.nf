@@ -258,8 +258,8 @@ process strelka2_singularity {
     input:
     // Input specification for the Strelka workflow
     // Define inputs for the Strelka workflow: metadata, normal CRAM and index, and tumor CRAM and index.
-    tuple val(meta), path(normal_Cram1), path(normal_index) from normal_cram_crai1
-    tuple val(meta), path(tumor_Cram1), path(tumor_index) from tumor_cram_crai1
+    tuple val(meta), path(normal_Cram), path(normal_index) from normal_cram_crai1
+    tuple val(meta), path(tumor_Cram), path(tumor_index) from tumor_cram_crai1
 
     // path normalBam from params.normalCram
     // path tumorBam from params.tumorCram
